@@ -1,9 +1,8 @@
 import { History, Home, Info } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import ThemeToggle from './ThemeToggle'
 
-export default function Navbar({ isDark, toggleTheme }) {
+export default function Navbar() {
   const location = useLocation()
 
   return (
@@ -65,7 +64,6 @@ export default function Navbar({ isDark, toggleTheme }) {
             <Info className="w-5 h-5" />
           </motion.button>
         </Link>
-        <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
       </div>
     </motion.nav>
   )

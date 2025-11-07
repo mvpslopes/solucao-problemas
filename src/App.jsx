@@ -45,38 +45,14 @@ function HomeWrapper({ onSaveStudy }) {
 }
 
 function App() {
-  const [isDark, setIsDark] = useState(true)
   const [toast, setToast] = useState({ message: '', isVisible: false })
 
   useEffect(() => {
-    // Carregar preferência de tema do localStorage
-    const savedTheme = localStorage.getItem('resolvai_theme')
-    if (savedTheme) {
-      setIsDark(savedTheme === 'dark')
-    } else {
-      // Verificar preferência do sistema
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      setIsDark(prefersDark)
-    }
+    // Sempre aplicar modo escuro
+    document.documentElement.classList.add('dark')
+    document.body.style.backgroundColor = '#0F172A'
+    document.body.style.color = '#F1F5F9'
   }, [])
-
-  useEffect(() => {
-    // Aplicar tema ao documento
-    if (isDark) {
-      document.documentElement.classList.add('dark')
-      document.body.style.backgroundColor = '#0F172A'
-      document.body.style.color = '#F1F5F9'
-    } else {
-      document.documentElement.classList.remove('dark')
-      document.body.style.backgroundColor = '#F8FAFC'
-      document.body.style.color = '#1E293B'
-    }
-    localStorage.setItem('resolvai_theme', isDark ? 'dark' : 'light')
-  }, [isDark])
-
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-  }
 
   const handleSaveStudy = (study) => {
     const saved = localStorage.getItem('resolvai_studies')
@@ -114,8 +90,8 @@ function App() {
 
   return (
     <Router>
-      <div className={`min-h-screen ${isDark ? 'bg-bg-primary' : 'bg-gray-50'}`}>
-        <Navbar isDark={isDark} toggleTheme={toggleTheme} />
+      <div className="min-h-screen bg-bg-primary">
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomeWrapper onSaveStudy={handleSaveStudy} />} />
           <Route path="/history" element={<History />} />
